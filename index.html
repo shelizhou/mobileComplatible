@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>count</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+        #count {
+            background: rgb(208, 134, 65);position:absolute;top:0px;bottom:0px;left:0px;right:0px;
+            color:#fff;font-size:100px;text-align: center;padding-top:220px;
+            -webkit-transition: all 0.3s ease-in;
+        }
+        .on {
+            -webkit-transform: scale(1.3);
+        }
+        #reset {
+            position:absolute;top:0px;right:0px;width: 80px;height: 80px;
+        }
+    
+        .ul {display: box; display: -webkit-box;width: 250px;background: yellow; overflow-y: hidden;overflow-x:auto;}
+        .li {flex-shrink:0; -webkit-flex-shrink: 0;width: 100px;height: 50px; background: red;margin-right: 5px;}
+
+        
+    </style>
+</head>
+<body>
+    <div class="ul">
+        <div class="li">1</div>
+        <div class="li">2</div>
+        <div class="li">3</div>
+        <div class="li">4</div>
+        <div class="li">5</div>
+    </div>
+    <!-- <div id="count">
+        1
+    </div>
+    <div id="reset"></div> -->
+</body>
+    <script>
+        var num = {
+            v : 1,
+            add : function(){
+                this.v++;
+                count.innerHTML = this.v;
+                count.className = "on";
+                setTimeout(function(){
+                    count.className = "";
+                }, 300);
+                return this.v;
+            },
+            reset : function(){
+                this.v = 1;
+                count.innerHTML = this.v;
+                return this.v;
+            }
+        };
+        reset.addEventListener('click', function(e) {
+            num.reset();
+        });
+        count.addEventListener('touchstart', function(e) {
+            num.add();
+        });
+
+        var id = null;
+        function watchProximity() {
+            if ( id ) {
+                return;
+            }
+            id = plus.proximity.watchProximity( function ( d ) {
+                if ( d < 1 ) {
+                    num.add();
+                }
+            }, function ( e ) {
+                plus.proximity.clearWatch( id );
+                id = null;
+            } );
+        }
+        function watchStop() {
+            if ( id ) {
+                plus.proximity.clearWatch( id );
+                id = null;
+            } else {
+            }
+        }
+        document.addEventListener( "plusready", function(){
+            watchProximity();
+        }, false );
+    </script>
+</html>
